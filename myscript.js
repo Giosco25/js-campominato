@@ -5,34 +5,37 @@
 // Al termine della partita il software deve comunicare il punteggio, cioè il numero di volte che l'utente ha inserito un numero consentito; in altre parole, deve comunicare all'utente quante giocate ha fatto prima di perdere.
 
 // Chiedere al computer di generare 16 numeri casuali da 1 a 100 => che vengono chiamate MINE
-// function random_generator(min, max) {
-//   return Math.floor(Math.random() * (max - min)) + min;
-//   console.log('random_generator');
-//   for (var i = 0; i < 16; i++) {
-//       var numeroGenerato = random_generator(1, 100);
-//       console.log('numero random tra 1 e 100: ' + numeroGenerato);
-//   }
-// }
-// chiedere all'utente di inserire un numero alla volta compreso tra 1 e 100
-var numero_utente = parseInt(prompt('Scrivi un numero da 1 a 100'));
-console.log(numero_utente);
-// Se questo numero è inserito nelle mine, la partita termina.
-
-// Se questo numero non è inserito nella lista, si chiede all'utente un altro numero per continuare a giocare
-// La partita termina quando il giocatore becca una mina
-// Al termine della partita il software deve comunicare il punteggio
 function generaRandom(min, max) {
     var numero = Math.floor(Math.random() * (max - min + 1)) + min;
     return numero;
 }
-
-for (var i = 0; i < 16; i++) {
+function generaMine() {
+    var mine = [];
+    for (var i = 0; i < 16; i++) {
     var numero_generato = generaRandom(1, 100);
-    console.log('numero random tra 1 e 100: ' + numeroGenerato);
-}
-if (numero_utente == numero_generato) {
-    console.log('hai perso');
+     mine.push(numero_generato);
 
-} else {
-    numero_utente = prompt('Inserisci un altro numero');
+ }
+    return mine;
+}
+var listaMine = generaMine();
+console.log(listaMine);
+var next = true;
+while (next) {
+    var numero_utente = parseInt(prompt('Scrivi un numero da 1 a 100'))
+    console.log(numero_utente);
+    if (controlloMine(listaMine ,numero_utente)) {
+        next = false;
+        console.log('hai perso');
+    }
+}
+
+function controlloMine(lst, numero) {
+    var trovato = false;
+    for (var i = 0; i < listaMine.length; i++) {
+     if (lst[i] == numero) {
+        trovato = true;
+        }
+    }
+    return trovato;
 }
